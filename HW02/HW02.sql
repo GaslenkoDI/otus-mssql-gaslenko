@@ -77,22 +77,21 @@ SELECT
 Таблицы: Sales.Orders, Sales.OrderLines, Sales.Customers.
 */
 
-SELECT 
-	o.OrderID, CONVERT(NVARCHAR, o.OrderDate, 104) AS OrderDate, c.CustomerName, DATENAME(MM, o.OrderDate) AS Mounth, DATEPART(QUARTER, o.OrderDate) AS [Quarter],
-CASE WHEN MONTH(o.OrderDate) <5 THEN 1 WHEN MONTH(o.OrderDate) > 8 THEN 3 ELSE 2 END [Треть]
+SELECT o.OrderID, CONVERT(NVARCHAR, o.OrderDate, 104) AS OrderDate, c.CustomerName, DATENAME(MM, o.OrderDate) AS Mounth, DATEPART(QUARTER, o.OrderDate) AS [Quarter],
+CASE WHEN MONTH(o.OrderDate) <5 THEN 1 WHEN MONTH(o.OrderDate) > 8 THEN 3 ELSE 2 END [Quarter1]
 FROM Sales.Orders AS o
 JOIN Sales.OrderLines AS ol ON o.OrderID = ol.OrderID 
 JOIN Sales.Customers AS c ON o.CustomerID = c.CustomerID
 WHERE ol.UnitPrice > 100 or ol.Quantity > 20 and ol.PickingCompletedWhen is not null
-ORDER BY [Quarter], [Треть], o.OrderDate
+ORDER BY [Quarter], [Quarter1], o.OrderDate
 
 SELECT o.OrderID, CONVERT(NVARCHAR, o.OrderDate, 104) AS OrderDate, c.CustomerName, DATENAME(MM, o.OrderDate) AS Mounth, DATEPART(QUARTER, o.OrderDate) AS [Quarter],
-CASE WHEN MONTH(o.OrderDate) <5 THEN 1 WHEN MONTH(o.OrderDate) > 8 THEN 3 ELSE 2 END [Треть]
+CASE WHEN MONTH(o.OrderDate) <5 THEN 1 WHEN MONTH(o.OrderDate) > 8 THEN 3 ELSE 2 END [Quarter1]
 FROM Sales.Orders AS o
 JOIN Sales.OrderLines AS ol ON o.OrderID = ol.OrderID 
 JOIN Sales.Customers AS c ON o.CustomerID = c.CustomerID
 WHERE ol.UnitPrice > 100 or ol.Quantity > 20 and ol.PickingCompletedWhen is not null
-ORDER BY [Quarter], [Треть], o.OrderDate OFFSET 1000 rows fetch first 100 rows only
+ORDER BY [Quarter], [Quarter1], o.OrderDate OFFSET 1000 rows fetch first 100 rows only
 
 
 /*
