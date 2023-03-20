@@ -181,7 +181,7 @@ GO
 
 SELECT @@SERVERNAME
 
-exec master..xp_cmdshell 'bcp "[WideWorldImporters].Sales.InvoiceLines" out  "C:\Users\olgaasu\Desktop\Обучение\otus-mssql-suldyaeva\HW08\InvoiceLines1.txt" -T -w -t"@$$", -S ROCHWS1072\SQL2017'
+exec master..xp_cmdshell 'bcp "[WideWorldImporters].Sales.InvoiceLines" out  "C:\Users\daniilig\Desktop\Обучение\otus-mssql-gaslenko\HW08\InvoiceLines1.txt" -T -w -t"@$$", -S ROCHWS1179\SQL2017'
 
 drop table if exists [Sales].[InvoiceLines_BulkDemo]
 
