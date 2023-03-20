@@ -56,7 +56,7 @@ DECLARE @xmlDocument  xml
 
 SELECT @xmlDocument = BulkColumn
 FROM OPENROWSET
-(BULK 'C:\Users\olgaasu\Documents\StockItems.xml', 
+(BULK 'C:\Users\daniilig\Documents\StockItems.xml', 
  SINGLE_CLOB)
 as data
 EXEC sp_xml_preparedocument @docHandle OUTPUT, @xmlDocument
@@ -80,7 +80,7 @@ WITH (
 DECLARE @x XML
 SET @x = ( 
   SELECT * FROM OPENROWSET
-  (BULK 'C:\Users\olgaasu\Documents\StockItems.xml',
+  (BULK 'C:\Users\daniilig\Documents\StockItems.xml',
    SINGLE_CLOB) as d)
 
 SELECT  
