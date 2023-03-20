@@ -78,19 +78,21 @@ ORDER BY i.[InvoiceDate]
 в каждом месяце за 2016 год (по 2 самых популярных продукта в каждом месяце).
 */
 
-SELECT	i.[OrderID], 
-		с.[CustomerName], 
-		i.[InvoiceDate], 
-		l.[Quantity] * l.[UnitPrice] as InvSum,
-		SUM(l.[UnitPrice]*l.[Quantity]) OVER (ORDER BY FORMAT(i.[InvoiceDate], 'yyyyMM')
-                ) as total
-FROM [Sales].[Invoices]		as i
-JOIN [Sales].[InvoiceLines] as l on i.[InvoiceID] = l.[InvoiceID]
-JOIN [Sales].[Customers]	as с on с.[CustomerID] = i.[CustomerID]
-WHERE i.[InvoiceDate] >= '20150101'
-ORDER BY i.[InvoiceDate]
+SELECT * 
+FROM (
+SELECT 
+		MONTH(InvoiceDate) AS [Month],
+		[Description],
+		SUM (Quantity) AS SumQuantity,
+		ROW_NUMBER () OVER (PARTITION BY MONTH(InvoiceDate) ORDER BY(SUM (Quantity)) DESC) AS RowPopular
 
-1 сек
+FROM Sales.Invoices AS SI
+JOIN Sales.InvoiceLines AS SIL ON
+	SI.InvoiceID=SIL.InvoiceID
+WHERE YEAR(InvoiceDate)=2016
+GROUP BY [Description], MONTH(InvoiceDate)) AS T
+WHERE T.RowPopular <=2
+ORDER BY [Month]
 
 /*
 4. Функции одним запросом
